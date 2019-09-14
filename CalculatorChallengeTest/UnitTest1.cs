@@ -39,5 +39,13 @@ namespace CalculatorChallengeTest
             var result = format.GetNumbersFromArgument("1, 2, 3,4,5,6,7,8,9,10,11,12, x, x, x, 13");
             Assert.AreEqual(91, result);
         }
+
+        [TestMethod]
+        public void TestStringSpace()
+        {
+            FormatOutput format = new FormatOutput();
+            var result = format.GetNumbersFromArgument("1\n13, 3 ");
+            Assert.AreEqual(17, result);
+        }
     }
 }

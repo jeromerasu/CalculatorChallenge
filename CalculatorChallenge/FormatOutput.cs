@@ -9,6 +9,7 @@ namespace CalculatorChallenge
         public int GetNumbersFromArgument(String argString)
         {
             int sum = 0;
+            argString = argString.Replace("\n", ",");
             String[] sArr = argString.Split(',');
             foreach (String s in sArr)
             {
