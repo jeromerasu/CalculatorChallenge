@@ -17,7 +17,10 @@ namespace CalculatorChallenge
             {
                 int temp;
                 Int32.TryParse(s, out temp);
- 
+                if (temp > 1000)
+                {
+                    temp = 0;
+                }
                 if (temp < 0)
                 {
                     negNumbersDetected = true;
