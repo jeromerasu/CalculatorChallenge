@@ -16,11 +16,17 @@ namespace CalculatorChallenge
         {
             int sum = 0;
             //custom delimiters will always be first line or first line separated by a new line according to readme
-            String delim = getDelimiters(argString);
-            //replace all delimiters with commas as well as new lines, make sure delim is 
-            if (!delim.Equals(""))
+            if (checkIfCustomDelimiter(argString))
             {
-                argString = argString.Replace(delim, ",");
+                List<String> delims = getDelimiters(argString);
+                //replace all delimiters with commas as well as new lines, make sure delim is 
+                if (delims.Count > 0)
+                {
+                    foreach (String delim in delims)
+                    {
+                        argString = argString.Replace(delim, ",");
+                    }
+                }
             }
             argString = argString.Replace("\n", ",");
             String[] sArr = argString.Split(',');
@@ -48,33 +54,63 @@ namespace CalculatorChallenge
             return sum;
         }
         /// <summary>
-        /// returns de
+        /// Will return if string contains custom characters or not
         /// </summary>
         /// <param name="argString"></param>
         /// <returns></returns>
-        private static String getDelimiters(String argString)
+        public Boolean checkIfCustomDelimiter(String argString)
         {
-            StringBuilder sb = new StringBuilder();
             Char[] argChars = argString.ToCharArray();
-            for (int i = 1; i < argChars.Length; i++)
+            return (argChars[0] == '/') && (argChars[1] == '/');
+        }
+        /// <summary>
+        /// returns delimiters, assumes delimiters will not include [ or ] characters
+        /// </summary>
+        /// <param name="argString"></param>
+        /// <returns></returns>
+        private static List<String> getDelimiters(String argString)
+        {
+            List<String> customDelimiters = new List<String>();
+            Char[] argChars = argString.ToCharArray();
+            StringBuilder sb = new StringBuilder();
+
+            Boolean withinBracket = true;
+            //start at 2 because that will either be a [ or a single character.
+            for (int i = 2; i < argChars.Length; i++)
             {
-                //since we're only returning one delimiter, function will break once we reach
-                if(argChars[i] == ']')
+                if (argChars[2] != '[')
                 {
-                    break;
+                    customDelimiters.Add(argChars[2].ToString());
+                    return customDelimiters;
                 }
-               if (argChars[i-1] == '[')
+                //since we're only returning one delimiter, function will break once we reach
+                if (argChars[i] == ']')
+                {
+                    int temp;
+                    if (Int32.TryParse(sb.ToString(), out temp))
+                    {
+                        ///we do not want to have a delimiter that can be parsed as a number
+                        Console.WriteLine("custom delimiter not valid");
+                    }
+                    else
+                    {
+                        withinBracket = false;
+                        customDelimiters.Add(sb.ToString());
+                    }
+                }
+               if (argChars[i] == '[')
+                {
+                    sb = new StringBuilder();
+                    withinBracket = true;
+                    continue;
+                }
+               if (withinBracket)
                 {
                     sb.Append(argChars[i]);
                 }
             }
-            int temp;
-            if (Int32.TryParse(sb.ToString(), out temp))
-            {
-                ///we do not want to have a delimiter that can be parsed as a number
-                return "";
-            }
-            return sb.ToString();
+
+            return customDelimiters;
         }
     }
 }

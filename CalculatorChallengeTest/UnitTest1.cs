@@ -69,7 +69,7 @@ namespace CalculatorChallengeTest
         public void TestNumbersCustomDelim()
         {
             FormatOutput format = new FormatOutput();
-            var result = format.GetNumbersFromArgument("//.\n1.2.3\n2");
+            var result = format.GetNumbersFromArgument("//[.]\n1.2.3\n2");
             Assert.AreEqual(8, result);
         }
 
@@ -79,6 +79,15 @@ namespace CalculatorChallengeTest
             FormatOutput format = new FormatOutput();
             var result = format.GetNumbersFromArgument("//[...]\n1...23\n2");
             Assert.AreEqual(26, result);
+        }
+
+
+        [TestMethod]
+        public void TestNumbersCustomUnlimitedDelims()
+        {
+            FormatOutput format = new FormatOutput();
+            var result = format.GetNumbersFromArgument("//[...][;.']\n1...23;.'1\n2");
+            Assert.AreEqual(27, result);
         }
     }
 }
