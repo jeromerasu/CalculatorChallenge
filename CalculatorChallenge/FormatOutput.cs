@@ -11,11 +11,23 @@ namespace CalculatorChallenge
             int sum = 0;
             argString = argString.Replace("\n", ",");
             String[] sArr = argString.Split(',');
+            Boolean negNumbersDetected = false;
+            List<Int32> negNumbers = new List<int>();
             foreach (String s in sArr)
             {
                 int temp;
                 Int32.TryParse(s, out temp);
+ 
+                if (temp < 0)
+                {
+                    negNumbersDetected = true;
+                    negNumbers.Add(temp);
+                }
                 sum += temp;
+            }
+            if (negNumbersDetected)
+            {
+                throw NegativeNumberException.Return(negNumbers);
             }
             return sum;
         }

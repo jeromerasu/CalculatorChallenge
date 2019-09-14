@@ -47,5 +47,21 @@ namespace CalculatorChallengeTest
             var result = format.GetNumbersFromArgument("1\n13, 3 ");
             Assert.AreEqual(17, result);
         }
+        [TestMethod]
+        [ExpectedException(typeof(NegativeNumberException))]
+        public void TestStringNegatives()
+        {
+            FormatOutput format = new FormatOutput();
+            var result = format.GetNumbersFromArgument("1\n13, -1 ");
+            Assert.AreEqual(17, result);
+        }
+
+        [TestMethod]
+        public void TestNumbersAboveThousand()
+        {
+            FormatOutput format = new FormatOutput();
+            var result = format.GetNumbersFromArgument("1\n 1000, 1001\n2");
+            Assert.AreEqual(1003, result);
+        }
     }
 }
