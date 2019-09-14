@@ -72,5 +72,13 @@ namespace CalculatorChallengeTest
             var result = format.GetNumbersFromArgument("//.\n1.2.3\n2");
             Assert.AreEqual(8, result);
         }
+
+        [TestMethod]
+        public void TestNumbersCustomUnlimitedDelim()
+        {
+            FormatOutput format = new FormatOutput();
+            var result = format.GetNumbersFromArgument("//[...]\n1...23\n2");
+            Assert.AreEqual(26, result);
+        }
     }
 }
