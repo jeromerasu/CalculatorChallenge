@@ -63,5 +63,14 @@ namespace CalculatorChallengeTest
             var result = format.GetNumbersFromArgument("1\n 1000, 1001\n2");
             Assert.AreEqual(1003, result);
         }
+
+
+        [TestMethod]
+        public void TestNumbersCustomDelim()
+        {
+            FormatOutput format = new FormatOutput();
+            var result = format.GetNumbersFromArgument("//.\n1.2.3\n2");
+            Assert.AreEqual(8, result);
+        }
     }
 }

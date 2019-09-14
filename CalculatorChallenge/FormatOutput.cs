@@ -9,6 +9,8 @@ namespace CalculatorChallenge
         public int GetNumbersFromArgument(String argString)
         {
             int sum = 0;
+            Char delim = getSingleDelimiter(argString);
+            argString = argString.Replace(delim, ',');
             argString = argString.Replace("\n", ",");
             String[] sArr = argString.Split(',');
             Boolean negNumbersDetected = false;
@@ -33,6 +35,11 @@ namespace CalculatorChallenge
                 throw NegativeNumberException.Return(negNumbers);
             }
             return sum;
+        }
+
+        private static Char getSingleDelimiter(String argString)
+        {
+            return argString.ToCharArray()[2];
         }
     }
 }
