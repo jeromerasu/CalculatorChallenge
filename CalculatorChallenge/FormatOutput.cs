@@ -22,8 +22,6 @@ namespace CalculatorChallenge
                     return null;
                 }
                 //doing this for testing purposes
-
-                
                 //custom delimiters will always be first line or first line separated by a new line according to readme
                 if (checkIfCustomDelimiter(argString))
                 {
@@ -97,14 +95,13 @@ namespace CalculatorChallenge
             return ProductOutputLine(sArr, false, 1000, 1);
         }
         /// <summary>
-        /// Cal
+        /// Produce calculate output line that will show the formula as well as get total value.
         /// </summary>
         /// <param name="sArr"></param>
         /// <param name="allowNeg"></param>
         /// <param name="upperBound"></param>
         /// <param name="operation"></param>
         /// <returns></returns>
-
         private static CalculateOutputLine ProductOutputLine(String[] sArr, Boolean allowNeg, Int32 upperBound, int operation)
         {
             Boolean negNumbersDetected = false;
@@ -194,8 +191,23 @@ namespace CalculatorChallenge
                     sb.Append(argChars[i]);
                 }
             }
-
+            SanitizeDelims(customDelimiters);
             return customDelimiters;
+        }
+        /// <summary>
+        /// removes any negative delimiters to prevent having negative signs
+        /// </summary>
+        /// <param name="delims"></param>
+        private static void SanitizeDelims(List<String> delims)
+        {
+            for (int i = 0; i < delims.Count; i++)
+            {
+                if (delims[i].Equals("-"))
+                {
+                    Console.WriteLine("Negative delimiter was found, will be replaced with ','");
+                    delims[i] = ",";
+                }
+            }
         }
     }
 }

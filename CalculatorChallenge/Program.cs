@@ -3,7 +3,7 @@
 namespace CalculatorChallenge
 {
     /// <summary>
-    /// Driver for Calculator Class, when tryin
+    /// Driver for Calculator Class
     /// </summary>
     class Program
     {
@@ -29,6 +29,9 @@ namespace CalculatorChallenge
                 CustomCalculator();
             }
         }
+        /// <summary>
+        /// Have custom parameters as well as choose operation
+        /// </summary>
         private static void CustomCalculator()
         {
             Console.WriteLine("Press Y to allow negative numbers");
@@ -41,6 +44,7 @@ namespace CalculatorChallenge
 
                 Console.WriteLine("Input values to calculate ");
                 Console.WriteLine("Press control c to exit");
+                Console.WriteLine("For custom delimiters, please follow format //[delim][delim]\\n{numbers}");
                 String input = Console.ReadLine();
                 //Additional step to prevent anymore calculations
                 if (stop == true)
@@ -59,6 +63,9 @@ namespace CalculatorChallenge
 
             }
         }
+        /// <summary>
+        /// Use the default calculator
+        /// </summary>
         private static void DefaultOperation()
         {
 
@@ -67,6 +74,7 @@ namespace CalculatorChallenge
 
                 Console.WriteLine("Input values to calculate ");
                 Console.WriteLine("Press control c to exit");
+                Console.WriteLine("For custom delimiters, please follow format //[delim][delim]\\n{numbers}");
                 String input = Console.ReadLine();
                 //Additional step to prevent anymore calculations
                 if (stop == true)
@@ -78,11 +86,14 @@ namespace CalculatorChallenge
                 if (calculation != null)
                 {
                     Console.WriteLine($"Formula was : {calculation.Formula} ");
-                    Console.WriteLine($"Total was : {calculation.Nums}");
+                    Console.WriteLine($"Total was : {calculation.Total}");
                 }
 
             }
         }
+        /// <summary>
+        /// Function to set for quick settings or customize calculator options
+        /// </summary>
         private static void ProcessDefaultOrNo()
         {
             while (true)
@@ -101,6 +112,9 @@ namespace CalculatorChallenge
                 }
             }
         }
+        /// <summary>
+        /// Chooses which operation to use.
+        /// </summary>
         private static void ProcessDifferentOperation()
         {
             while (true)
@@ -123,6 +137,9 @@ namespace CalculatorChallenge
                 }
             }
         }
+        /// <summary>
+        /// Set the alternate delimiter, no numbers are allowed
+        /// </summary>
         private static void ProcessAltDelim()
         {
             while (true)
@@ -136,6 +153,11 @@ namespace CalculatorChallenge
                 }
                 else
                 {
+                    if (newCustomDelimiter.Equals("-"))
+                    {
+                        Console.WriteLine("'-' cannot be a delimiter");
+                        continue;
+                    }
                     if (newCustomDelimiter == null || newCustomDelimiter.Length == 0)
                     {
                         newCustomDelimiter = Environment.NewLine;
@@ -144,7 +166,9 @@ namespace CalculatorChallenge
                 }
             }
         }
-
+        /// <summary>
+        /// Set the upper bound number
+        /// </summary>
         private static void ProcessUpperBound()
         {
             while (true)
@@ -159,15 +183,25 @@ namespace CalculatorChallenge
                 }
                 else
                 {
+                    if (tempInput.Equals("."))
+                    {
+                        upperBound = 1000;
+                        break;
+                    }
                     Console.WriteLine("Please input valid number as upper bound");
                 }
             }
         }
+        /// <summary>
+        /// Handle cancellation of program.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="c"></param>
         static void CancelKeyPress(object sender, ConsoleCancelEventArgs c)
         {
             c.Cancel = true;
             stop = true;
-            Console.WriteLine($"Calculator is now exiting");
+            Console.WriteLine($"Calculator is now exiting!");
         }
     }
 }
